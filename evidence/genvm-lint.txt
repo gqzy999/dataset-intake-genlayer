@@ -1,0 +1,8 @@
+genvm-lint, version 0.11.0
+d994be9435b032ccf58d23dd1b291654d70941777b5a0ce97af4160842457536  contracts/intake.py
+
+✓ Lint passed (3 checks)
+✓ Validation passed
+  Contract: DatasetIntake
+  Methods: 4 (1 view, 3 write)
+  ℹ py-genlayer: a newer runner is available (1zr6nqk597d97kg0dyxg0shhrykx5v02zjgnyrajapy4wlqvfvwh). See https://github.com/genlayerlabs/genvm/releases for changes.

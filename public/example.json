@@ -1,0 +1,22 @@
+{
+  "id": 1196821,
+  "doi": "10.5281/zenodo.1196821",
+  "title": "PsPM-SC4B: SCR, ECG, EMG, PSR and respiration measurements in a delay fear conditioning task with auditory CS and electrical US",
+  "files": [
+    {
+      "name": "excludes.txt",
+      "size": 410,
+      "checksum": "md5:62a6a4e2c1221c1187f4ddca2fac6f7a"
+    },
+    {
+      "name": "README.txt",
+      "size": 3916,
+      "checksum": "md5:dfd66779511f682f1b19d9aa1c84904c"
+    },
+    {
+      "name": "Data.zip",
+      "size": 475125133,
+      "checksum": "md5:a48676bd0cc35d26b5f17d78dca00caa"
+    }
+  ]
+}
