@@ -4,7 +4,7 @@ import {getAddress} from 'viem'
 import {chain,rpc,explorer,reader,checkNetwork,waitFinalized,readWindow} from './chain.js'
 
 const $ = id => document.getElementById(id)
-const deployment = await fetch('./deployment.json').then(response=>response.json())
+import deployment from './public/deployment.json'
 const wallets = []
 let actor, provider, current, address, balance, busy = false
 const temporary = []
