@@ -3,7 +3,7 @@
 <body><header><strong>Dataset Intake</strong><span>Stable Studionet · 61999</span></header>
 <main>
   <h1>Reconcile a research delivery.</h1>
-  <p class="intro">Match the submitted manifest to a fixed Zenodo release. Only the designated recipient can sign off a cleared delivery.</p>
+  <p class="intro">Match the submitted manifest to a fixed Dryad or Zenodo release. Only the designated recipient can sign off a cleared delivery.</p>
   <section class="dock">
     <aside><h2>Delivery desk</h2>
       <label>Contract address <input id="contract" pattern="0x[0-9a-fA-F]{40}"></label>
@@ -15,9 +15,11 @@
       <button id="disconnect" type="button">Disconnect</button>
       <p id="account">Public reads are available without a wallet.</p>
       <details><summary>Lodge a manifest</summary>
+        <button id="fixture" type="button">Load example Dryad manifest</button>
         <form id="lodge">
           <label>Delivery slug<input id="slug" pattern="[a-z0-9\\-]{3,36}" required></label>
-          <label>Zenodo record ID<input id="id" type="number" min="1" max="4294967295" required></label>
+          <label>Archive <select id="archive"><option value="dryad">Dryad</option><option value="zenodo">Zenodo</option></select></label>
+          <label>Record or version ID<input id="id" type="number" min="1" max="4294967295" required></label>
           <label>Recipient address<input id="recipient" pattern="0x[0-9a-fA-F]{40}" required></label>
           <label>Manifest JSON<textarea id="manifest" required rows="7" placeholder='[{"name":"…","size":0,"checksum":"md5:…"}]'></textarea></label>
           <button>Lodge delivery</button>
@@ -26,7 +28,7 @@
     </aside>
     <section class="record"><p class="kicker">CHAIN OF CUSTODY</p>
       <h2 id="state">No delivery open</h2><p id="decision">Open a finalized delivery to compare its submitted and official manifests.</p>
-      <dl id="roles"></dl><p><a id="source" hidden target="_blank" rel="noopener">Zenodo source ↗</a></p>
+      <dl id="roles"></dl><p><a id="source" hidden target="_blank" rel="noopener">Official archive ↗</a></p>
       <div class="table"><table hidden id="files"><thead><tr><th>File</th><th>Submitted</th><th>Official</th><th>Result</th></tr></thead><tbody></tbody></table></div>
       <div class="actions"><button id="reconcile" hidden>Request independent verification</button><button id="receive" hidden>Sign off receipt</button><button id="export" hidden>Download handoff JSON</button></div>
       <p id="status" role="status">Ready</p><a id="tx" hidden target="_blank" rel="noopener">Transaction ↗</a><ul id="trail"></ul>

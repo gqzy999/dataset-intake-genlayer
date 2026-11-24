@@ -1,0 +1,404 @@
+{
+  "chainId": 61999,
+  "rpc": "https://studio.genlayer.com/api",
+  "sourceSha256": "b866139479589fbae026b54320a2f66f1ad993513a7c0890622abc39670f8e9d",
+  "owner": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+  "delegate": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5",
+  "steps": {
+    "deployment": {
+      "method": "deploy",
+      "args": [],
+      "sender": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+      "hash": "0xc8df3851995a324afdcfb69a5cc961ce499190846c5d5f64911b6a2f6664602f",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "readback": {
+        "address": "0xF2035f00d53Aa986F8fc9896C2E5483B526fA8CA",
+        "sourceVerified": true
+      },
+      "verified": true
+    },
+    "complete-delivery-lodge": {
+      "method": "lodge_dryad",
+      "args": [
+        "complete-delivery",
+        26724,
+        "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5",
+        "[{\"name\":\"PMC_reuse_of_2007_GEO_datasets.csv\",\"size\":1842019,\"checksum\":\"md5:1bfc5f0f05efb9c4d8abe042ecd8a66f\"},{\"name\":\"README_for_PMC_reuse_of_2007_GEO_datasets.pdf\",\"size\":747416,\"checksum\":\"md5:8ebe9f0e0eef67d94d46a4f2d3dede56\"},{\"name\":\"tables.csv\",\"size\":1176,\"checksum\":\"md5:76330f8572ab638692ce80a14f9ac977\"}]"
+      ],
+      "sender": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+      "hash": "0x275455c3945b096c617436ed0cc2146f1369c40c53d216d2a3030f7fa6620e76",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "readback": {
+        "owner": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+        "recipient": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5",
+        "record_id": 26724,
+        "expected": {
+          "PMC_reuse_of_2007_GEO_datasets.csv": {
+            "name": "PMC_reuse_of_2007_GEO_datasets.csv",
+            "size": 1842019,
+            "checksum": "md5:1bfc5f0f05efb9c4d8abe042ecd8a66f"
+          },
+          "README_for_PMC_reuse_of_2007_GEO_datasets.pdf": {
+            "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+            "size": 747416,
+            "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56"
+          },
+          "tables.csv": {
+            "name": "tables.csv",
+            "size": 1176,
+            "checksum": "md5:76330f8572ab638692ce80a14f9ac977"
+          }
+        },
+        "archive": "dryad",
+        "state": "LODGED"
+      },
+      "verified": true
+    },
+    "incomplete-delivery-lodge": {
+      "method": "lodge_dryad",
+      "args": [
+        "incomplete-delivery",
+        26724,
+        "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+        "[{\"name\":\"README_for_PMC_reuse_of_2007_GEO_datasets.pdf\",\"size\":747416,\"checksum\":\"md5:8ebe9f0e0eef67d94d46a4f2d3dede56\"},{\"name\":\"tables.csv\",\"size\":1176,\"checksum\":\"md5:76330f8572ab638692ce80a14f9ac977\"}]"
+      ],
+      "sender": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5",
+      "hash": "0xb69c5230e2e1c168b552782e778bc9f6c5f36c6aa1a484a049ac808ac59adb00",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "readback": {
+        "owner": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5",
+        "recipient": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+        "record_id": 26724,
+        "expected": {
+          "README_for_PMC_reuse_of_2007_GEO_datasets.pdf": {
+            "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+            "size": 747416,
+            "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56"
+          },
+          "tables.csv": {
+            "name": "tables.csv",
+            "size": 1176,
+            "checksum": "md5:76330f8572ab638692ce80a14f9ac977"
+          }
+        },
+        "archive": "dryad",
+        "state": "LODGED"
+      },
+      "verified": true
+    },
+    "complete-delivery-reconcile": {
+      "method": "reconcile",
+      "args": [
+        "0x17257f830c7c1d8b23253be922040572e8bb8e3b/complete-delivery"
+      ],
+      "sender": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+      "hash": "0x0e0e1cfd460f3b6ced27cb7225c14f5515a85c8cd9b25e64030e4f9f225b7c98",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "readback": {
+        "owner": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+        "recipient": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5",
+        "record_id": 26724,
+        "expected": {
+          "PMC_reuse_of_2007_GEO_datasets.csv": {
+            "name": "PMC_reuse_of_2007_GEO_datasets.csv",
+            "size": 1842019,
+            "checksum": "md5:1bfc5f0f05efb9c4d8abe042ecd8a66f"
+          },
+          "README_for_PMC_reuse_of_2007_GEO_datasets.pdf": {
+            "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+            "size": 747416,
+            "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56"
+          },
+          "tables.csv": {
+            "name": "tables.csv",
+            "size": 1176,
+            "checksum": "md5:76330f8572ab638692ce80a14f9ac977"
+          }
+        },
+        "archive": "dryad",
+        "state": "CLEARED",
+        "evidence": {
+          "doi": "10.5061/dryad.j1fd7",
+          "files": {
+            "PMC_reuse_of_2007_GEO_datasets.csv": {
+              "checksum": "md5:1bfc5f0f05efb9c4d8abe042ecd8a66f",
+              "name": "PMC_reuse_of_2007_GEO_datasets.csv",
+              "size": 1842019
+            },
+            "README_for_PMC_reuse_of_2007_GEO_datasets.pdf": {
+              "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56",
+              "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+              "size": 747416
+            },
+            "tables.csv": {
+              "checksum": "md5:76330f8572ab638692ce80a14f9ac977",
+              "name": "tables.csv",
+              "size": 1176
+            }
+          }
+        },
+        "differences": {
+          "missing": [],
+          "extra": [],
+          "changed": []
+        },
+        "verifier": "0x17257f830c7c1d8b23253be922040572e8bb8e3b"
+      },
+      "verified": true
+    },
+    "incomplete-delivery-reconcile": {
+      "method": "reconcile",
+      "args": [
+        "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5/incomplete-delivery"
+      ],
+      "sender": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5",
+      "hash": "0x09bff0dc26a8e420d69c2dd07597aaaa85ecaf08be38365809246b2f7adee261",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "readback": {
+        "owner": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5",
+        "recipient": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+        "record_id": 26724,
+        "expected": {
+          "README_for_PMC_reuse_of_2007_GEO_datasets.pdf": {
+            "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+            "size": 747416,
+            "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56"
+          },
+          "tables.csv": {
+            "name": "tables.csv",
+            "size": 1176,
+            "checksum": "md5:76330f8572ab638692ce80a14f9ac977"
+          }
+        },
+        "archive": "dryad",
+        "state": "BLOCKED",
+        "evidence": {
+          "doi": "10.5061/dryad.j1fd7",
+          "files": {
+            "PMC_reuse_of_2007_GEO_datasets.csv": {
+              "checksum": "md5:1bfc5f0f05efb9c4d8abe042ecd8a66f",
+              "name": "PMC_reuse_of_2007_GEO_datasets.csv",
+              "size": 1842019
+            },
+            "README_for_PMC_reuse_of_2007_GEO_datasets.pdf": {
+              "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56",
+              "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+              "size": 747416
+            },
+            "tables.csv": {
+              "checksum": "md5:76330f8572ab638692ce80a14f9ac977",
+              "name": "tables.csv",
+              "size": 1176
+            }
+          }
+        },
+        "differences": {
+          "missing": [
+            "PMC_reuse_of_2007_GEO_datasets.csv"
+          ],
+          "extra": [],
+          "changed": []
+        },
+        "verifier": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5"
+      },
+      "verified": true
+    },
+    "wrong-recipient": {
+      "method": "receive",
+      "args": [
+        "0x17257f830c7c1d8b23253be922040572e8bb8e3b/complete-delivery"
+      ],
+      "sender": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+      "hash": "0xd5530af6612876bdee7f275f33a4fdedbc21e9b7ea4a6e4283f74842fa378edf",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "error": "RECIPIENT_REQUIRED",
+      "readback": {
+        "owner": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+        "recipient": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5",
+        "record_id": 26724,
+        "expected": {
+          "PMC_reuse_of_2007_GEO_datasets.csv": {
+            "name": "PMC_reuse_of_2007_GEO_datasets.csv",
+            "size": 1842019,
+            "checksum": "md5:1bfc5f0f05efb9c4d8abe042ecd8a66f"
+          },
+          "README_for_PMC_reuse_of_2007_GEO_datasets.pdf": {
+            "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+            "size": 747416,
+            "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56"
+          },
+          "tables.csv": {
+            "name": "tables.csv",
+            "size": 1176,
+            "checksum": "md5:76330f8572ab638692ce80a14f9ac977"
+          }
+        },
+        "archive": "dryad",
+        "state": "CLEARED",
+        "evidence": {
+          "doi": "10.5061/dryad.j1fd7",
+          "files": {
+            "PMC_reuse_of_2007_GEO_datasets.csv": {
+              "checksum": "md5:1bfc5f0f05efb9c4d8abe042ecd8a66f",
+              "name": "PMC_reuse_of_2007_GEO_datasets.csv",
+              "size": 1842019
+            },
+            "README_for_PMC_reuse_of_2007_GEO_datasets.pdf": {
+              "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56",
+              "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+              "size": 747416
+            },
+            "tables.csv": {
+              "checksum": "md5:76330f8572ab638692ce80a14f9ac977",
+              "name": "tables.csv",
+              "size": 1176
+            }
+          }
+        },
+        "differences": {
+          "missing": [],
+          "extra": [],
+          "changed": []
+        },
+        "verifier": "0x17257f830c7c1d8b23253be922040572e8bb8e3b"
+      },
+      "verified": true
+    },
+    "receive": {
+      "method": "receive",
+      "args": [
+        "0x17257f830c7c1d8b23253be922040572e8bb8e3b/complete-delivery"
+      ],
+      "sender": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5",
+      "hash": "0x06ea7c11af484983b449e043ec894d5ca8fd739e467021510ede72747cf7a85d",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "SUCCESS",
+      "readback": {
+        "owner": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+        "recipient": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5",
+        "record_id": 26724,
+        "expected": {
+          "PMC_reuse_of_2007_GEO_datasets.csv": {
+            "name": "PMC_reuse_of_2007_GEO_datasets.csv",
+            "size": 1842019,
+            "checksum": "md5:1bfc5f0f05efb9c4d8abe042ecd8a66f"
+          },
+          "README_for_PMC_reuse_of_2007_GEO_datasets.pdf": {
+            "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+            "size": 747416,
+            "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56"
+          },
+          "tables.csv": {
+            "name": "tables.csv",
+            "size": 1176,
+            "checksum": "md5:76330f8572ab638692ce80a14f9ac977"
+          }
+        },
+        "archive": "dryad",
+        "state": "RECEIVED",
+        "evidence": {
+          "doi": "10.5061/dryad.j1fd7",
+          "files": {
+            "PMC_reuse_of_2007_GEO_datasets.csv": {
+              "checksum": "md5:1bfc5f0f05efb9c4d8abe042ecd8a66f",
+              "name": "PMC_reuse_of_2007_GEO_datasets.csv",
+              "size": 1842019
+            },
+            "README_for_PMC_reuse_of_2007_GEO_datasets.pdf": {
+              "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56",
+              "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+              "size": 747416
+            },
+            "tables.csv": {
+              "checksum": "md5:76330f8572ab638692ce80a14f9ac977",
+              "name": "tables.csv",
+              "size": 1176
+            }
+          }
+        },
+        "differences": {
+          "missing": [],
+          "extra": [],
+          "changed": []
+        },
+        "verifier": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+        "received_by": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5"
+      },
+      "verified": true
+    },
+    "blocked-receipt": {
+      "method": "receive",
+      "args": [
+        "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5/incomplete-delivery"
+      ],
+      "sender": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+      "hash": "0xdf842e76de82489d1ebaae096bcc492e93313f6ea8a09594d5b4eb26e2e1e2e0",
+      "status": "FINALIZED",
+      "consensus": "MAJORITY_AGREE",
+      "execution": "ERROR",
+      "error": "NOT_CLEARED",
+      "readback": {
+        "owner": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5",
+        "recipient": "0x17257f830c7c1d8b23253be922040572e8bb8e3b",
+        "record_id": 26724,
+        "expected": {
+          "README_for_PMC_reuse_of_2007_GEO_datasets.pdf": {
+            "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+            "size": 747416,
+            "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56"
+          },
+          "tables.csv": {
+            "name": "tables.csv",
+            "size": 1176,
+            "checksum": "md5:76330f8572ab638692ce80a14f9ac977"
+          }
+        },
+        "archive": "dryad",
+        "state": "BLOCKED",
+        "evidence": {
+          "doi": "10.5061/dryad.j1fd7",
+          "files": {
+            "PMC_reuse_of_2007_GEO_datasets.csv": {
+              "checksum": "md5:1bfc5f0f05efb9c4d8abe042ecd8a66f",
+              "name": "PMC_reuse_of_2007_GEO_datasets.csv",
+              "size": 1842019
+            },
+            "README_for_PMC_reuse_of_2007_GEO_datasets.pdf": {
+              "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56",
+              "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+              "size": 747416
+            },
+            "tables.csv": {
+              "checksum": "md5:76330f8572ab638692ce80a14f9ac977",
+              "name": "tables.csv",
+              "size": 1176
+            }
+          }
+        },
+        "differences": {
+          "missing": [
+            "PMC_reuse_of_2007_GEO_datasets.csv"
+          ],
+          "extra": [],
+          "changed": []
+        },
+        "verifier": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5"
+      },
+      "verified": true
+    }
+  },
+  "address": "0xF2035f00d53Aa986F8fc9896C2E5483B526fA8CA"
+}

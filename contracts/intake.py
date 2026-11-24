@@ -39,6 +39,13 @@ class DatasetIntake(gl.Contract):
 
     @gl.public.write
     def lodge(self, slug: str, record_id: u32, recipient: Address, files: str) -> None:
+        self._lodge(slug, record_id, recipient, files, "zenodo")
+
+    @gl.public.write
+    def lodge_dryad(self, slug: str, record_id: u32, recipient: Address, files: str) -> None:
+        self._lodge(slug, record_id, recipient, files, "dryad")
+
+    def _lodge(self, slug, record_id, recipient, files, archive):
         owner = str(gl.message.sender_address).lower()
         receiver = str(recipient).lower()
         require(owner != receiver and receiver != "0x" + "0"*40, "DISTINCT_RECIPIENT")
@@ -47,7 +54,7 @@ class DatasetIntake(gl.Contract):
         key = owner + "/" + slug
         require(key not in self.cases, "EXISTS")
         self.cases[key] = json.dumps({"owner":owner,"recipient":receiver,"record_id":int(record_id),
-                                      "expected":manifest(json.loads(files)), "state":"LODGED"})
+                                      "expected":manifest(json.loads(files)), "archive":archive, "state":"LODGED"})
 
     @gl.public.write
     def reconcile(self, key: str) -> None:
@@ -56,19 +63,41 @@ class DatasetIntake(gl.Contract):
         record_id = case["record_id"]
 
         def observe():
+            if case.get("archive") == "dryad":
+                path = f"/api/v2/versions/{record_id}"
+                response = gl.nondet.web.get("https://datadryad.org" + path + "/files")
+                if response.status != 200:
+                    return {"http_status": response.status}
+                data = json.loads(response.body)
+                listing = data["_embedded"]["stash:files"]
+                require(data["count"] == data["total"] == len(listing), "INCOMPLETE_OFFICIAL_MANIFEST")
+                rows = []
+                dataset_path = ""
+                for item in listing:
+                    require(item["_links"]["stash:version"]["href"] == path, "WRONG_VERSION")
+                    dataset = item["_links"]["stash:dataset"]["href"]
+                    require(not dataset_path or dataset_path == dataset, "WRONG_VERSION")
+                    dataset_path = dataset
+                    require(item["digestType"] == "md5", "FILE_CHECKSUM")
+                    rows.append({"name":item["path"], "size":item["size"], "checksum":"md5:"+item["digest"]})
+                prefix = "/api/v2/datasets/doi%3A10.5061%2F"
+                require(dataset_path.startswith(prefix), "MISSING_DOI")
+                return {"doi":"10.5061/"+dataset_path[len(prefix):].lower(),"files":manifest(rows)}
             response = gl.nondet.web.get(BASE + str(record_id))
-            require(response.status == 200, "ZENODO_UNAVAILABLE")
+            if response.status != 200:
+                return {"http_status": response.status}
             data = json.loads(response.body)
             doi = "10.5281/zenodo." + str(record_id)
             require(data["id"] == record_id and data["doi"].lower() == doi, "WRONG_VERSION")
             files = manifest([{"name":item["key"], "size":item["size"], "checksum":item["checksum"]}
                               for item in data["files"]])
-            return json.dumps({"doi":doi,"files":files}, sort_keys=True)
+            return {"doi":doi,"files":files}
 
         def verify(leader):
             return isinstance(leader, gl.vm.Return) and leader.calldata == observe()
 
-        evidence = json.loads(gl.vm.run_nondet_unsafe(observe, verify))
+        evidence = gl.vm.run_nondet_unsafe(observe, verify)
+        require("http_status" not in evidence, "ARCHIVE_UNAVAILABLE_" + str(evidence.get("http_status", "")))
         diff = differences(case["expected"], evidence["files"])
         case.update(evidence=evidence, differences=diff, verifier=str(gl.message.sender_address).lower(),
                     state="BLOCKED" if any(diff.values()) else "CLEARED")

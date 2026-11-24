@@ -1,1 +1,52 @@
-{}
+{
+  "address": "0xF2035f00d53Aa986F8fc9896C2E5483B526fA8CA",
+  "cases": [
+    {
+      "label": "Received example",
+      "key": "0x17257f830c7c1d8b23253be922040572e8bb8e3b/complete-delivery",
+      "steps": [
+        {
+          "label": "complete delivery lodge",
+          "hash": "0x275455c3945b096c617436ed0cc2146f1369c40c53d216d2a3030f7fa6620e76",
+          "execution": "SUCCESS"
+        },
+        {
+          "label": "complete delivery reconcile",
+          "hash": "0x0e0e1cfd460f3b6ced27cb7225c14f5515a85c8cd9b25e64030e4f9f225b7c98",
+          "execution": "SUCCESS"
+        },
+        {
+          "label": "wrong recipient",
+          "hash": "0xd5530af6612876bdee7f275f33a4fdedbc21e9b7ea4a6e4283f74842fa378edf",
+          "execution": "ERROR"
+        },
+        {
+          "label": "receive",
+          "hash": "0x06ea7c11af484983b449e043ec894d5ca8fd739e467021510ede72747cf7a85d",
+          "execution": "SUCCESS"
+        }
+      ]
+    },
+    {
+      "label": "Blocked example",
+      "key": "0x1a79a0e7209e499e81fc8dcf9d526276344f91f5/incomplete-delivery",
+      "steps": [
+        {
+          "label": "incomplete delivery lodge",
+          "hash": "0xb69c5230e2e1c168b552782e778bc9f6c5f36c6aa1a484a049ac808ac59adb00",
+          "execution": "SUCCESS"
+        },
+        {
+          "label": "incomplete delivery reconcile",
+          "hash": "0x09bff0dc26a8e420d69c2dd07597aaaa85ecaf08be38365809246b2f7adee261",
+          "execution": "SUCCESS"
+        },
+        {
+          "label": "blocked receipt",
+          "hash": "0xdf842e76de82489d1ebaae096bcc492e93313f6ea8a09594d5b4eb26e2e1e2e0",
+          "execution": "ERROR"
+        }
+      ]
+    }
+  ]
+}

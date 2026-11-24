@@ -1,0 +1,7 @@
+b866139479589fbae026b54320a2f66f1ad993513a7c0890622abc39670f8e9d  contracts/intake.py
+
+✓ Lint passed (3 checks)
+✓ Validation passed
+  Contract: DatasetIntake
+  Methods: 5 (1 view, 4 write)
+  ℹ py-genlayer: a newer runner is available (1zr6nqk597d97kg0dyxg0shhrykx5v02zjgnyrajapy4wlqvfvwh). See https://github.com/genlayerlabs/genvm/releases for changes.

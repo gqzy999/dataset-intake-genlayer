@@ -53,6 +53,36 @@ class IntakeTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "NOT_CLEARED"):
             self.app.receive(KEY)
 
+    def test_dryad_matches_only_the_pinned_complete_manifest(self):
+        rows = FIXTURE["files"]
+        version_path = f'/api/v2/versions/{FIXTURE["id"]}'
+        self.app.lodge_dryad("fixture", FIXTURE["id"], RECIPIENT, json.dumps(rows))
+        official = {
+            "count": len(rows), "total": len(rows),
+            "_embedded": {"stash:files": [
+                {"path": row["name"], "size": row["size"], "digestType": "md5",
+                 "digest": row["checksum"][4:], "_links": {
+                    "stash:version": {"href": version_path},
+                    "stash:dataset": {"href": "/api/v2/datasets/doi%3A10.5061%2Fdryad.example"},
+                 }} for row in rows
+            ]},
+        }
+        url = f'https://datadryad.org{version_path}/files'
+        self.responses.extend([(url, official)] * 2)
+        self.app.reconcile(KEY)
+        record = self.read()
+        self.assertEqual(record["archive"], "dryad")
+        self.assertEqual(record["record_id"], FIXTURE["id"])
+        self.assertEqual(record["evidence"]["doi"], "10.5061/dryad.example")
+        self.assertEqual(record["state"], "CLEARED")
+
+    def test_unavailable_archive_preserves_pending_manifest(self):
+        self.lodge(FIXTURE["files"])
+        self.responses.extend([(None, (403, {}))] * 2)
+        with self.assertRaisesRegex(ValueError, "ARCHIVE_UNAVAILABLE"):
+            self.app.reconcile(KEY)
+        self.assertEqual(self.read()["state"], "LODGED")
+
     def test_disagreement_leaves_delivery_retryable(self):
         self.lodge(FIXTURE["files"])
         altered = copy.deepcopy(self.official)

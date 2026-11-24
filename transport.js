@@ -57,7 +57,7 @@ export const finalized = (tx) => [7, "FINALIZED"].includes(tx?.status);
 export function succeeded(tx) {
   return (
     finalized(tx) &&
-    [6, "MAJORITY_AGREE"].includes(tx.result) &&
+    (tx.result_name ?? tx.result) === "MAJORITY_AGREE" &&
     leader(tx)?.execution_result === "SUCCESS"
   );
 }

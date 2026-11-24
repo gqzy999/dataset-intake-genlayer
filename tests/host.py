@@ -14,7 +14,8 @@ def contract(source, name, owner):
         expected, payload = responses.pop(0)
         if expected is not None and expected != url:
             raise AssertionError((expected, url))
-        return SimpleNamespace(status=200, body=json.dumps(payload).encode())
+        status, body = payload if isinstance(payload, tuple) else (200, payload)
+        return SimpleNamespace(status=status, body=json.dumps(body).encode())
 
     def exposed(fn):
         return fn

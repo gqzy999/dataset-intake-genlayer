@@ -5,6 +5,7 @@ import {chain,rpc,explorer,reader,checkNetwork,waitFinalized,readWindow} from '.
 
 const $ = id => document.getElementById(id)
 import deployment from './public/deployment.json'
+import fixture from './public/dryad-example.json'
 const wallets = []
 let actor, provider, current, address, balance, busy = false
 const temporary = []
@@ -123,7 +124,7 @@ function show(record) {
   $('source').hidden=!record
   $('files').hidden=!record
   if(record){
-    $('source').href='https://zenodo.org/api/records/'+record.record_id
+    $('source').href=record.archive==='dryad' ? 'https://datadryad.org/api/v2/versions/'+record.record_id+'/files' : 'https://zenodo.org/api/records/'+record.record_id
     for(const [label,value] of Object.entries({Lodged:record.owner,Recipient:record.recipient,Reconciled:record.verifier,Received:record.received_by,DOI:record.evidence?.doi,Contract:address})){
       const row=document.createElement('div')
       const term=document.createElement('dt')
@@ -177,6 +178,9 @@ async function send(method,args,reference,expected){
   if(!deployment.address || contract.toLowerCase()!==deployment.address.toLowerCase()) throw Error('Writes require the published, verified Dataset Intake contract.')
   await checkNetwork()
   const from=actor
+  const {distribution,feeValue}=await reader.estimateTransactionFees()
+  const fees={distribution,feeValue}
+  const getBalance=async()=>BigInt(await reader.request({method:'eth_getBalance',params:[from,'latest']}))
   let signer
   if(provider){
     const wallet=provider
@@ -186,15 +190,19 @@ async function send(method,args,reference,expected){
     signer=createClient({chain,account:active,provider:{async request(request){
       if(request.method==='eth_sendTransaction'){
         const [tx]=request.params
-        if(Number(await wallet.request({method:'eth_chainId'}))!==61999 || BigInt(tx.value??0)!==0n || BigInt(tx.gasPrice??1)!==0n) throw Error('Expected zero value and zero gas price on Stable Studionet.')
+        if(Number(await wallet.request({method:'eth_chainId'}))!==61999 || BigInt(tx.value??0)!==feeValue || BigInt(tx.gasPrice??1)!==0n) throw Error('Expected the quoted protocol deposit and zero gas price on Stable Studionet.')
       }
       return wallet.request(request)
     }}})
   }else signer=createClient({chain,account:temporary.find(account=>account.address.toLowerCase()===from)})
   const purpose=method+' · '+from+' · Stable Studionet 61999'
   status(purpose+' · Awaiting signature')
-  if(!provider && !window.confirm('Send '+purpose+'?')) {status('Signature cancelled');return}
-  const hash=await signer.writeContract({address:contract,functionName:method,args,value:0n,leaderOnly:false})
+  if(!provider){
+    if(!window.confirm('Send '+purpose+' with a '+feeValue+' wei test GEN protocol deposit?')) {status('Signature cancelled');return}
+    if(await getBalance()<feeValue) await reader.request({method:'sim_fundAccount',params:[from,'1000000000000000000']})
+  }
+  if(await getBalance()<feeValue) throw Error('Insufficient Studionet test GEN for the quoted protocol deposit.')
+  const hash=await signer.writeContract({address:contract,functionName:method,args,value:0n,leaderOnly:false,fees})
   $('tx').href=explorer+'/transactions/'+hash
   $('tx').hidden=false
   status('Submitted '+hash)
@@ -203,10 +211,17 @@ async function send(method,args,reference,expected){
   const record=await load()
   if(!expected.includes(record?.state)) throw Error('Transaction finalized but the expected state could not be read.')
   status('FINALIZED / SUCCESS · '+record.state)
+  if(!provider) balance=await getBalance().catch(()=>undefined)
 }
+action('fixture',async()=>{
+  $('archive').value='dryad'
+  $('id').value=fixture.id
+  $('manifest').value=JSON.stringify(fixture.files,null,2)
+})
 action('lodge',()=>{
   const slug=$('slug').value
-  return send('lodge',[slug,Number($('id').value),getAddress($('recipient').value),JSON.stringify(JSON.parse($('manifest').value))],actor+'/'+slug,['LODGED'])
+  const args=[slug,Number($('id').value),getAddress($('recipient').value),JSON.stringify(JSON.parse($('manifest').value))]
+  return send($('archive').value==='dryad'?'lodge_dryad':'lodge',args,actor+'/'+slug,['LODGED'])
 })
 action('reconcile',()=>send('reconcile',[key()],key(),['CLEARED','BLOCKED']))
 action('receive',()=>send('receive',[key()],key(),['RECEIVED']))

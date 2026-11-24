@@ -1,0 +1,21 @@
+{
+  "id": 26724,
+  "doi": "10.5061/dryad.j1fd7",
+  "files": [
+    {
+      "name": "PMC_reuse_of_2007_GEO_datasets.csv",
+      "size": 1842019,
+      "checksum": "md5:1bfc5f0f05efb9c4d8abe042ecd8a66f"
+    },
+    {
+      "name": "README_for_PMC_reuse_of_2007_GEO_datasets.pdf",
+      "size": 747416,
+      "checksum": "md5:8ebe9f0e0eef67d94d46a4f2d3dede56"
+    },
+    {
+      "name": "tables.csv",
+      "size": 1176,
+      "checksum": "md5:76330f8572ab638692ce80a14f9ac977"
+    }
+  ]
+}

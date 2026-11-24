@@ -40,11 +40,18 @@ export function lab(sourceFile) {
     if (!step) {
       assert.equal(Number(await reader.getChainId()),61999)
       assert.equal(BigInt(await reader.request({method:'eth_gasPrice',params:[]})),0n)
+      const {distribution,feeValue}=await actor.client.estimateTransactionFees()
+      const fees={distribution,feeValue}
+      const balance=async()=>BigInt(await reader.request({method:'eth_getBalance',params:[actor.address,'latest']}))
+      if (await balance()<feeValue && temporary) {
+        await reader.request({method:'sim_fundAccount',params:[actor.address,'1000000000000000000']})
+      }
+      assert(await balance()>=feeValue,'Insufficient Studionet test GEN')
       evidence.steps[label]=step={method,args,sender:actor.address,hash:null}
       save()
       step.hash=method==='deploy'
-        ? await actor.client.deployContract({code:source,args:[],leaderOnly:false})
-        : await actor.client.writeContract({address:evidence.address,functionName:method,args,value:0n,leaderOnly:false})
+        ? await actor.client.deployContract({code:source,args:[],leaderOnly:false,fees})
+        : await actor.client.writeContract({address:evidence.address,functionName:method,args,value:0n,leaderOnly:false,fees})
       save()
     }
     assert(step.hash,'Submission is uncertain. Check the chain before any retry.')
@@ -61,12 +68,12 @@ export function lab(sourceFile) {
     }
     assert([7,'FINALIZED'].includes(receipt?.status),'Finalization not confirmed')
     assert.equal(receipt.from_address.toLowerCase(),actor.address)
-    assert([6,'MAJORITY_AGREE'].includes(receipt.result),'Consensus did not agree')
+    assert((receipt.result_name ?? receipt.result)==='MAJORITY_AGREE','Consensus did not agree')
     const entries=[receipt.consensus_data?.leader_receipt].flat()
     const leader=entries.find(item=>item?.mode==='leader') ?? entries[0]
     assert(leader,'Leader receipt unavailable')
     Object.assign(step,{status:'FINALIZED',consensus:'MAJORITY_AGREE',execution:leader.execution_result})
-    if (expectedError) step.error=leader.result?.payload?.readable ?? leader.result?.readable ?? JSON.stringify(leader.result)
+    if (step.execution!=='SUCCESS') step.error=leader.result?.payload?.readable ?? leader.result?.payload ?? leader.result?.readable ?? JSON.stringify(leader.result)
     save()
     if(expectedError){
       assert.equal(step.execution,'ERROR')
@@ -79,6 +86,14 @@ export function lab(sourceFile) {
     return step.readback
   }
   async function deploy() {
+    const address=process.env.STUDIO_CONTRACT_ADDRESS
+    if(address) {
+      assert.equal(await reader.getContractCode(address),source)
+      assert(!evidence.address || evidence.address===address,'Evidence address differs from requested deployment')
+      evidence.address=address
+      save()
+      return {address,sourceVerified:true}
+    }
     return tx('deployment','deploy',[],async receipt=>{
       evidence.address=receipt.data.contract_address
       assert.equal(await reader.getContractCode(evidence.address),source)

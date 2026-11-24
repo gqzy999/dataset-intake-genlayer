@@ -34,7 +34,7 @@ export async function waitFinalized(hash, update = () => {}, {allowExecutionErro
       if ([7, 'FINALIZED'].includes(tx.status)) {
         const receipts = [tx.consensus_data?.leader_receipt].flat()
         const leader = receipts.find(item => item?.mode === 'leader') ?? receipts[0]
-        if (![6, 'MAJORITY_AGREE'].includes(tx.result) || !leader) {
+        if ((tx.result_name ?? tx.result)!=='MAJORITY_AGREE' || !leader) {
           throw Error('FINALIZED · Consensus result: ' + (tx.result_name ?? tx.result))
         }
         if (leader.execution_result !== 'SUCCESS' && !allowExecutionError) {
