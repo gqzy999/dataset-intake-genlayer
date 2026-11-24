@@ -18,6 +18,7 @@ jobs:
       - run: npm audit --audit-level=high
       - run: node --check scripts/verify-live.mjs
       - run: npm test
+      - run: npm run verify:live
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
