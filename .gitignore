@@ -2,3 +2,8 @@ node_modules/
 dist/
 .private/
 __pycache__/
+
+# Local environment files and secrets
+.env
+.env.*
+!.env.example

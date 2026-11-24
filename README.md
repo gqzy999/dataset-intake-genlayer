@@ -26,13 +26,18 @@ The receipt attests to matching publisher metadata and recipient acknowledgement
 npm ci
 npm test
 npm run build
+npm audit --audit-level=high
+node --check scripts/verify-live.mjs
+npm run verify:live
 python3 -m pip install genvm-linter==0.11.0
 genvm-lint check contracts/intake.py
 ```
 
 [GenVM validation](evidence/genvm-lint-dryad.txt) covers the deployed source. The app uses genlayer-js 2.0.0. Stable Studionet quotes a protocol deposit in test GEN with an EVM gas price of zero. Temporary browser wallet keys remain in memory, and the Studio faucet can fund those accounts. Injected wallets need their own test GEN balance.
 
-The live acceptance script uses authorized test signers provided through `STUDIO_OWNER_KEY` and `STUDIO_DELEGATE_KEY`, or fresh in-memory signers with `STUDIO_SIGNERS=ephemeral npm run live`. Set `STUDIO_CONTRACT_ADDRESS` to verify an existing, source-matched deployment. Use a fresh `STUDIO_EVIDENCE_PATH` for a fresh run. Reconcile uncertain broadcasts before retrying.
+`npm run verify:live` is read-only. It checks the deployed source, recorded finalized transaction receipts, consensus and execution results, and the current on-chain states against the saved evidence. It does not request a wallet, sign or submit transactions, deploy a contract, fund an account, or change contract state.
+
+`npm run live` is a write-capable acceptance run. It uses authorized test signers provided through `STUDIO_OWNER_KEY` and `STUDIO_DELEGATE_KEY`, or fresh in-memory signers with `STUDIO_SIGNERS=ephemeral npm run live`. Set `STUDIO_CONTRACT_ADDRESS` to use an existing, source-matched deployment; otherwise the script deploys. Use a fresh `STUDIO_EVIDENCE_PATH` for a fresh run. Reconcile uncertain broadcasts before retrying.
 
 ## Live evidence
 
